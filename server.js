@@ -7,8 +7,8 @@ const app = e();
 const s = "ranjan123"
 
 app.use(cors({
-  origin: 'https://mytodo-list-ten.vercel.app', // ✅ Use your frontend's URL
-  credentials: true                              // ✅ Allow cookies
+    origin: 'https://mytodo-list-ten.vercel.app', // ✅ Use your frontend's URL
+    credentials: true                              // ✅ Allow cookies
 }));
 
 app.use(cookieParser());
@@ -64,11 +64,12 @@ app.post("/login", async (req, res) => {
         } else {
             const t = gt(ur, pass);
             res.cookie('token', t, {
-                httpOnly: true,         // Prevent access from JavaScript
-                maxAge: 60 * 60 * 1000, // 1 hour
-                sameSite: 'lax',        // Protects against CSRF in most cases
-                // secure: true,        // Only enable this in HTTPS (production)
+                httpOnly: true,
+                maxAge: 60 * 60 * 1000,
+                sameSite: 'none',   // 👈 Needed for Vercel + Render
+                secure: true        // 👈 Required for HTTPS (Render uses HTTPS)
             });
+
             return res.json("done")
         }
 
@@ -148,26 +149,26 @@ app.post('/delete', async (req, res) => {
 })
 
 app.post("/hup", async (req, res) => {
-  try {
-    const t = req.cookies.token;
-    const v = vt(t);
+    try {
+        const t = req.cookies.token;
+        const v = vt(t);
 
-    if (!v) return res.status(401).json("Invalid token");
+        if (!v) return res.status(401).json("Invalid token");
 
-    const { _id, isDone } = req.body;
-    const decoded = jwt.decode(t);
-    const ur = decoded.pass;
+        const { _id, isDone } = req.body;
+        const decoded = jwt.decode(t);
+        const ur = decoded.pass;
 
-    const result = await sh1.updateOne(
-      { pass: ur, "todos._id": _id },
-      { $set: { "todos.$.isDone": !isDone } }
-    );
+        const result = await sh1.updateOne(
+            { pass: ur, "todos._id": _id },
+            { $set: { "todos.$.isDone": !isDone } }
+        );
 
-    res.json("done");
-  } catch (error) {
-    console.log(error);
-    res.status(500).json("Server error");
-  }
+        res.json("done");
+    } catch (error) {
+        console.log(error);
+        res.status(500).json("Server error");
+    }
 });
 
 
