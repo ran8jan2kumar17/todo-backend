@@ -1,12 +1,10 @@
 import mongoose from 'mongoose';
 
 mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  ssl: true, // Important for MongoDB Atlas
+  ssl: true, // Needed for MongoDB Atlas
 })
-.then(() => console.log("MongoDB connected"))
-.catch(err => console.error("MongoDB connection error:", err));
+.then(() => console.log("✅ MongoDB connected"))
+.catch(err => console.error("❌ MongoDB connection error:", err));
 
 const sh = mongoose.Schema({
   ur: { type: String, required: true },
