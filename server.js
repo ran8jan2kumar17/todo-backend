@@ -6,10 +6,7 @@ import cookieParser from 'cookie-parser';
 const app = e();
 const s = "ranjan123"
 
-app.use(cors({
-    origin: 'http://localhost:5173',  // ✅ Your frontend's URL
-    credentials: true                 // ✅ Allow cookies
-}));
+app.use(cors());
 app.use(cookieParser());
 app.use(e.json()); // For parsing JSON bodies
 app.use(e.urlencoded({ extended: true })); // For parsing URL-encoded bodies
