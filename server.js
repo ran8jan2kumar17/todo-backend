@@ -6,7 +6,11 @@ import cookieParser from 'cookie-parser';
 const app = e();
 const s = "ranjan123"
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://mytodo-list-ten.vercel.app', // ✅ Use your frontend's URL
+  credentials: true                              // ✅ Allow cookies
+}));
+
 app.use(cookieParser());
 app.use(e.json()); // For parsing JSON bodies
 app.use(e.urlencoded({ extended: true })); // For parsing URL-encoded bodies
