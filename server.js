@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 const app = e();
 const s = "ranjan123"
 
+
 app.use(cors({
     origin: 'https://mytodo-list-ten.vercel.app', // ✅ Use your frontend's URL
     credentials: true                              // ✅ Allow cookies
@@ -173,6 +174,6 @@ app.post("/hup", async (req, res) => {
 
 
 
-app.listen(8000, () => {
+app.listen(process.env.PORT, () => {
     console.log("run");
 })
