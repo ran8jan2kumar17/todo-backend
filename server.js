@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import sh1 from './mongoos.js'
 import cookieParser from 'cookie-parser';
 const app = e();
-const s = "ranjan123"
+const s = process.env.S_KEY
 
 
 app.use(cors({
