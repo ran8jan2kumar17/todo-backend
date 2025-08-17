@@ -59,7 +59,7 @@ app.post('/singup', async (req, res) => {
 app.post("/login", async (req, res) => {
     try {
         const { ur, pass } = req.body;
-        const r = await sh1.findOne({ pass: pass });
+        const r = await sh1.findOne({ ur:ur, pass: pass });
         if (r == null) {
             return res.json("no");
         } else {
